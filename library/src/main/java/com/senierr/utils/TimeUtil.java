@@ -47,7 +47,7 @@ public class TimeUtil {
      * @param pattern 格式
      * @return 日期字符串
      */
-    public String format(long millis, @NonNull String pattern) {
+    public static String format(long millis, @NonNull String pattern) {
         return format(new Date(millis), pattern, Locale.getDefault());
     }
 
@@ -58,7 +58,7 @@ public class TimeUtil {
      * @param pattern 格式
      * @return 日期字符串
      */
-    public String format(@NonNull Date date, @NonNull String pattern) {
+    public static String format(@NonNull Date date, @NonNull String pattern) {
         return format(date, pattern, Locale.getDefault());
     }
 
@@ -70,7 +70,7 @@ public class TimeUtil {
      * @param locale 区域
      * @return 日期字符串
      */
-    public String format(@NonNull Date date, @NonNull String pattern, @NonNull Locale locale) {
+    public static String format(@NonNull Date date, @NonNull String pattern, @NonNull Locale locale) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, locale);
         return simpleDateFormat.format(date);
     }
@@ -82,7 +82,7 @@ public class TimeUtil {
      * @param pattern 格式
      * @return 毫秒
      */
-    public long parse(@NonNull String time, @NonNull String pattern) {
+    public static long parse(@NonNull String time, @NonNull String pattern) {
         return parse(time, pattern, Locale.getDefault());
     }
 
@@ -94,7 +94,7 @@ public class TimeUtil {
      * @param locale 区域
      * @return 毫秒
      */
-    public long parse(@NonNull String time, @NonNull String pattern, @NonNull Locale locale) {
+    public static long parse(@NonNull String time, @NonNull String pattern, @NonNull Locale locale) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, locale);
         try {
             return simpleDateFormat.parse(time).getTime();
@@ -111,7 +111,7 @@ public class TimeUtil {
      * @param date 日期
      * @return 星期
      */
-    private int getWeek(@NonNull Date date) {
+    private static int getWeek(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.DAY_OF_WEEK);
