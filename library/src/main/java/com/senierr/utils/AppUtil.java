@@ -2,6 +2,7 @@ package com.senierr.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.List;
@@ -84,6 +86,48 @@ public final class AppUtil {
     public static void launchApp(final Activity activity, final String packageName, final int requestCode) {
         if (StringUtil.isSpace(packageName)) return;
         activity.startActivityForResult(getLaunchAppIntent(activity, packageName), requestCode);
+    }
+
+    /**
+     * 打开浏览器
+     *
+     * @param context
+     * @param url
+     * @return
+     */
+    public static boolean openBrowser(Context context, String url) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 跳转到指定应用市场
+     *
+     * @param context 上下文
+     * @param packageName 需要跳转的应用包名
+     * @param storePackageName 应用市场包名
+     * @return {@code true}: 跳转成功<br>{@code false}: 跳转失败
+     */
+    public static boolean openMarket(Context context, String packageName, String storePackageName) {
+        Uri uri = Uri.parse("market://details?id=" + packageName);
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            if (!TextUtils.isEmpty(storePackageName)) {
+                goToMarket.setPackage(storePackageName);
+            }
+            context.startActivity(goToMarket);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
