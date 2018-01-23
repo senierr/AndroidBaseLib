@@ -76,8 +76,9 @@ public class ActivityUtil {
      */
     public void finishAll() {
         while (activityList.size() > 0) {
-            activityList.remove(0);
-            activityList.get(0).finish();
+            Activity activity = activityList.get(0);
+            activityList.remove(activity);
+            activity.finish();
         }
     }
 }
